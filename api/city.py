@@ -37,7 +37,7 @@ def Update():
     else:
         return "Error"
 
-@route_cities.route('/deletecity/<id>', methods=[DELETE])
+@route_cities.route('/deletecity/<id>', methods=['DELETE'])
 def delete(id):
     city = City.query.get(id)
     db.session.delete(city)
