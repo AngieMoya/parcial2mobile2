@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, json
 from config.db import db, app, ma
 from models.city import City, CitySchema
 
-route_city = Blueprint("route_cities", __name__)
+route_cities = Blueprint("route_cities", __name__)
 
 city_schema = CitySchema()
 cities_schema = CitySchema(many=True)
@@ -20,7 +20,8 @@ def save():
     new_city = City(name, department)
     db.session.add(new_city)
     db.session.commit()
-    return "Datos guardados"
+    return jsonify(city_schema.dump(new_city))
+
 
 @route_cities.route('/updatecity', methods=['PUT'])
 def Update():
@@ -33,7 +34,7 @@ def Update():
         city.name = name
         city.department = department
         db.session.commit()
-        return "Datos actualizados"
+        return jsonify(city_schema.dump(city))
     else:
         return "Error"
 

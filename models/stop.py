@@ -1,10 +1,10 @@
 from config.db import  db, ma, app
 
 class Stop(db.Model):
-    __tablename__ = "tblstop"
+    __tablename__ = "stops"
 
     id = db.Column(db.Integer, primary_key =True)
-    route = db.Column(db.Integer, db.ForeignKey('tblroute'))
+    route = db.Column(db.Integer, db.ForeignKey('routes'))
     address_destiny = db.Column(db.String(50))
     address_origin = db.Column(db.String(50))
 

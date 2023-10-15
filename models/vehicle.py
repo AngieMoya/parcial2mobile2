@@ -1,10 +1,10 @@
 from config.db import  db, ma, app
 
 class Vehicle(db.Model):
-    __tablename__ = "tblvehicle"
+    __tablename__ = "vehicles"
 
     id = db.Column(db.Integer, primary_key = True)
-    driver = db.Column(db.Integer, ForeignKey('tbldriver'))
+    driver = db.Column(db.Integer, ForeignKey('drivers'))
     model = db.Column(db.Integer(4))
     seats_num = db.Column(db.Integer(2))
 

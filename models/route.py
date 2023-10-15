@@ -1,11 +1,11 @@
 from config.db import  db, ma, app
 
 class Route(db.Model):
-    __tablename__= "tblroute"
+    __tablename__= "routes"
 
     id = db.Column(db.Integer, primary_key =True)
-    origin = db.Column(db.Integer, ForeignKey('tblcity'))
-    destination = db.Column(db.Integer, ForeignKey('tblcity'))
+    origin = db.Column(db.Integer, ForeignKey('cities'))
+    destination = db.Column(db.Integer, ForeignKey('cities'))
     distance = db.Column(db.Integer(9))
 
     def __init__(self, origin, destination, distance):

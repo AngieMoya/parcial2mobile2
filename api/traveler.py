@@ -15,28 +15,30 @@ def traveler():
 
 @route_travelers.route('/savetraveler', methods=['POST'])
 def save():
-    doc_type = request.json['document_type']
+    doc_type = request.json['doc_type']
     name = request.json['name']
     lastname = request.json['lastname']
     age = request.json['age']
     email = request.json['email']
     phone_number = request.json['phone_number']
     address = request.json['address']
+
     new_traveler = Traveler(doc_type, name, lastname, age, email, phone_number,address)
     db.session.add(new_traveler)
     db.session.commit()
-    return jsonify(new_traveler)
+    return jsonify(traveler_schema.dump(new_traveler))
 
 @route_travelers.route('/updatetraveler', methods=['PUT'])
 def Update():
     id = request.json['id']
-    doc_type = request.json['document_type']
+    doc_type = request.json['doc_type']
     name = request.json['name']
     lastname = request.json['lastname']
     age = request.json['age']
     email = request.json['email']
     phone_number = request.json['phone_number']
     address = request.json['address']
+
     traveler = Traveler.query.get(id)
     if traveler :
         print(traveler)
@@ -48,7 +50,7 @@ def Update():
         traveler.phone_number = phone_number
         traveler.address = address
         db.session.commit()
-        return "Datos actualizados"
+        return jsonify(traveler_schema.dump(traveler))
     else:
         return "Error"
 

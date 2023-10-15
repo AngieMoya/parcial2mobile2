@@ -1,11 +1,11 @@
 from config.db import  db, ma, app
 
 class Trip(db.Model):
-    __tablename__ = "tbltrip"
+    __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key =True)
-    vehicle = db.Column(db.Integer, ForeignKey('tblvehicle'))
-    route = db.Column(db.Integer, ForeignKey('tblroute'))
+    vehicle = db.Column(db.Integer, ForeignKey('vehicles'))
+    route = db.Column(db.Integer, ForeignKey('routes'))
     start_time = db.Column(db.String(50))
     ending_time = db.Column(db.String(50))
 

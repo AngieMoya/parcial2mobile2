@@ -1,11 +1,11 @@
 from config.db import  db, ma, app
 
 class Payment(de.Model):
-    __tablename__ = "tblpayment"
+    __tablename__ = "payments"
 
     id = db.Column(db.Integer, primary_key =True)
-    traveler = db.Column(db.Integer, db.ForeignKey('tbltraveler'))
-    request = db.Column(db.Integer, db.ForeignKey('tblrequest'))
+    traveler = db.Column(db.Integer, db.ForeignKey('travelers'))
+    request = db.Column(db.Integer, db.ForeignKey('requests'))
     state = db.Column(db.String(20))
     payment_method = db.Column(db.String(50))
 

@@ -1,11 +1,11 @@
 from config.db import  db, ma, app
 
 class DrivingDetail(db.Model):
-    __tablename__ = "tbldrivingdetail"
+    __tablename__ = "driving_details"
 
     id = db.Column(db.Integer, primary_key =True)
-    vehicle = db.Column(db.Integer, ForeignKey('tblvehicle'))
-    driver = db.Column(db.Integer, ForeignKey('tbldriver'))
+    vehicle = db.Column(db.Integer, ForeignKey('vehicles'))
+    driver = db.Column(db.Integer, ForeignKey('drivers'))
 
     def __init__(self, vehicle, driver):
         self.vehicle = vehicle

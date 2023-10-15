@@ -1,14 +1,14 @@
 from config.db import  db, ma, app
 
 class Request(db.Model):
-    __tablename__ = "tblrequest"
+    __tablename__ = "requests"
 
     id = db.Column(db.Integer, primary_key =True)
-    traveler = db.Column(db.Integer, ForeignKey('tbltraveler'))
-    stop = db.Column(db.Integer, ForeignKey('tblstop'))
-    origin_city = db.Column(db.Integer, ForeignKey('tblcity'))
-    destiny_city = db.Column(db.Integer, ForeignKey('tblcity'))
-    trip = db.Column(db.Integer, ForeignKey('tbltrip'))
+    traveler = db.Column(db.Integer, ForeignKey('travelers'))
+    stop = db.Column(db.Integer, ForeignKey('stop'))
+    origin_city = db.Column(db.Integer, ForeignKey('cities'))
+    destiny_city = db.Column(db.Integer, ForeignKey('cities'))
+    trip = db.Column(db.Integer, ForeignKey('trips'))
     seats = db.Column(db.Integer(2))
     preferences = db.Column(db.String(100))
 

@@ -18,10 +18,11 @@ def save():
     name = request.json['name']
     lastname = request.json['lastname']
     license = request.json['license']
+
     new_driver = Driver(name, lastname, license)
     db.session.add(new_driver)
     db.session.commit()
-    return new_driver
+    return jsonify(driver_schema.dump(new_driver))
 
 @route_drivers.route('/updatedriver', methods=['PUT'])
 def Update():
@@ -29,6 +30,7 @@ def Update():
     name = request.json['name']
     lastname = request.json['lastname']
     license = request.json['license']
+    
     driver = Driver.query.get(id)
     if driver:
         print(driver)
@@ -36,7 +38,7 @@ def Update():
         driver.lastname = lastname
         driver.license = license
         db.session.commit()
-        return "Datos actualizados"
+        return jsonify(driver_schema.dump(driver))
     else:
         return "Error"
 

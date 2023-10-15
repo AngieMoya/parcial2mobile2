@@ -1,15 +1,15 @@
 from config.db import  db, ma, app
 
 class Traveler(db.Model):
-    __tablename__ = "tbltraveler"
+    __tablename__ = "travelers"
 
     id = db.Column(db.Integer, primary_key =True)
-    doc_type = db.Column(db.Integer(12))
+    doc_type = db.Column(db.Integer())
     name = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
-    age = db.Column(db.Integer(2))
+    age = db.Column(db.Integer())
     email = db.Column(db.String(50))
-    phone_number = db.Column(db.Integer(10))
+    phone_number = db.Column(db.Integer())
     address = db.Column(db.String(50))
 
     def __init__(self, doc_type, name, lastname, age, email, phone_number, address) :

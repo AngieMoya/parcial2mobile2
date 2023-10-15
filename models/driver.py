@@ -1,7 +1,7 @@
 from config.db import  db, ma, app
 
 class Driver(db.Model):
-    __tablename__ = "tbldriver"
+    __tablename__ = "drivers"
 
     id = db.Column(db.Integer, primary_key =True)
     name = db.Column(db.String(50))

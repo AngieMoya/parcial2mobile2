@@ -1,7 +1,7 @@
 from config.db import  db, ma, app
 
 class City(db.Model):
-    __tablename__ = "tblcity"
+    __tablename__ = "cities"
 
     id = db.Column(db.Integer, primary_key =True)
     name = db.Column(db.String(50))
