@@ -10,34 +10,35 @@ vehicles_schema = VehicleSchema(many=True)
 @route_vehicles.route('/vehicles', methods=['GET'])
 def vehicle():
     resultall = Vehicle.query.all()
-    result_vehicle = vehicles_schema.dump(resultall)
-    return jsonify(result_vehicle)
+    result_vehicles = vehicles_schema.dump(resultall)
+    return jsonify(result_vehicles)
 
 @route_vehicles.route('/savevehicle', methods=['POST'])
 def save():
-    driver = request.json['doc_type']
+    plate = request.json['plate']
     model = request.json['model']
     seats_num = request.json['seats_num']
-    new_vehicle = Vehicle(driver, model, seats_num)
+    new_vehicle = Vehicle(plate, model, seats_num)
     db.session.add(new_vehicle)
     db.session.commit()
-    return jsonify(new_traveler)
+    return jsonify(vehicle_schema.dump(new_vehicle))
+
 
 
 @route_vehicles.route('/updatevehicle', methods=['PUT'])
 def Update():
     id = request.json['id']
-    driver = request.json['driver']
+    plate = request.json['plate']
     model = request.json['model']
     seats_num = request.json['seats_num']
     vehicle = Vehicle.query.get(id)
     if vehicle:
         print(vehicle)
-        vehicle.driver = driver
+        vehicle.plate = plate
         vehicle.model = model
         vehicle.seats_num = seats_num
         db.session.commit()
-        return "Datos actualizados"
+        return jsonify(vehicle_schema.dump(vehicle))
     else:
         return "Error"
 

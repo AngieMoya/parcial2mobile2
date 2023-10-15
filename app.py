@@ -5,10 +5,12 @@ from config.db import  db, ma, app
 from api.city import City, route_cities
 from api.traveler import Traveler, route_travelers
 from api.driver import Driver, route_drivers
+from api.vehicle import Vehicle, route_vehicles
 
 app.register_blueprint(route_cities, url_prefix = '/api')
 app.register_blueprint(route_travelers, url_prefix = '/api')
 app.register_blueprint(route_drivers, url_prefix = '/api')
+app.register_blueprint(route_vehicles, url_prefix = '/api')
 
 @app.route('/api')
 def index():

@@ -4,12 +4,12 @@ class Vehicle(db.Model):
     __tablename__ = "vehicles"
 
     id = db.Column(db.Integer, primary_key = True)
-    driver = db.Column(db.Integer, ForeignKey('drivers'))
-    model = db.Column(db.Integer(4))
-    seats_num = db.Column(db.Integer(2))
+    plate = db.Column(db.String(6))
+    model = db.Column(db.Integer())
+    seats_num = db.Column(db.Integer())
 
-    def __init__(self, driver, model, seats_num):
-        self.driver = driver
+    def __init__(self, plate, model, seats_num):
+        self.plate = plate
         self.model = model
         self.seats_num = seats_num
 
@@ -18,4 +18,4 @@ with app.app_context():
 
 class VehicleSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'driver', 'model', 'seats_num')
+        fields = ('id', 'plate', 'model', 'seats_num')
