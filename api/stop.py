@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, json
 from config.db import db, app, ma
 from models.stop import Stop, StopSchema
 
-route_stop = Blueprint("route_stops", __name__)
+route_stops = Blueprint("route_stops", __name__)
 
 stop_schema = StopSchema()
 stops_schema = StopSchema(many=True)
@@ -21,7 +21,7 @@ def save():
     new_stop = Stop(route, address_destiny, address_origin)
     db.session.add(new_stop)
     db.session.commit()
-    return jsonify(new_stop)
+    return jsonify(stop_schema.dump(new_stop))
 
 @route_stops.route('/updatestop', methods=['PUT'])
 def Update():
@@ -36,11 +36,11 @@ def Update():
         stop.address_destiny = address_destiny
         stop.address_origin = address_origin
         db.session.commit()
-        return " Datos actualizados"
+        return jsonify(stop_schema.dump(stop))
     else:
         return "Error"
 
-@route_stops.route('/deletestop', methods=['DELETE'])
+@route_stops.route('/deletestop/<id>', methods=['DELETE'])
 def delete(id):
     stop = Stop.query.get(id)
     db.session.delete(stop)

@@ -4,7 +4,7 @@ class Stop(db.Model):
     __tablename__ = "stops"
 
     id = db.Column(db.Integer, primary_key =True)
-    route = db.Column(db.Integer, db.ForeignKey('routes'))
+    route = db.Column(db.Integer, db.ForeignKey('routes.id'))
     address_destiny = db.Column(db.String(50))
     address_origin = db.Column(db.String(50))
 
