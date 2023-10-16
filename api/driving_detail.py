@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, json
 from config.db import db, app, ma
-from models.driving_details import DrivingDetail, DrivingDetailSchema
+from models.driving_detail import DrivingDetail, DrivingDetailSchema
 
 route_driving_details = Blueprint("route_driving_details", __name__)
 
@@ -17,22 +17,28 @@ def driving_detail():
 def save():
     vehicle = request.json['vehicle']
     driver = request.json['driver']
-    new_detail = City(vehicle, driver)
+    date_of_use = request.json['date_of_use']
+
+    new_detail = DrivingDetail(vehicle, driver, date_of_use)
     db.session.add(new_detail)
     db.session.commit()
-    return jsonify(details_schema.dump(new_detail))
+    return jsonify(detail_schema.dump(new_detail))
 
 @route_driving_details.route('/updatedetails', methods=['PUT'])
 def update():
     id = request.json['id']
     vehicle = request.json['vehicle']
     driver = request.json['driver']
+    date_of_use = request.json['date_of_use']
+
     detail = DrivingDetail.query.get(id)
     if detail:
         detail.vehicle = vehicle
         detail.detail = detail
+        detail.date_of_use = date_of_use
+
         db.session.commit()
-        return jsonify(details_schema.dump(detail))
+        return jsonify(detail_schema.dump(detail))
     else:
         return "Error"
 
@@ -41,4 +47,4 @@ def delete(id):
     detail = DrivingDetail.query.get(id)
     db.session.delete(detail)
     db.session.commit()
-    return jsonify(details_schema.dump(detail))
+    return jsonify(detail_schema.dump(detail))
