@@ -4,9 +4,9 @@ class Route(db.Model):
     __tablename__= "routes"
 
     id = db.Column(db.Integer, primary_key =True)
-    origin = db.Column(db.Integer, ForeignKey('cities'))
-    destination = db.Column(db.Integer, ForeignKey('cities'))
-    distance = db.Column(db.Integer(9))
+    origin = db.Column(db.Integer, db.ForeignKey('cities.id'))
+    destination = db.Column(db.Integer, db.ForeignKey('cities.id'))
+    distance = db.Column(db.Integer())
 
     def __init__(self, origin, destination, distance):
         self.origin = origin
