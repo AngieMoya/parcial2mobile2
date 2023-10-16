@@ -8,25 +8,24 @@ request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
 
 @route_requests.route('/requests', methods=['GET'])
-def request():
-    result_all = request.query.all()
+def petition():
+    result_all = Request.query.all()
     result_requests = requests_schema.dump(result_all)
     return jsonify(result_requests)
 
 @route_requests.route('/saverequest', methods=['POST'])
 def save():
-    traveler = request.json['traveler']
     stop = request.json['stop']
+    traveler = request.json['traveler']
     origin_city = request.json['origin_city']
     destiny_city = request.json['destiny_city']
     trip = request.json['trip']
     seats = request.json['seats']
     preferences = request.json['preferences']
-
-    new_request = City(traveler, stop, origin_city, destiny_city, trip, seats, preferences)
+    new_request = Request(traveler, stop, origin_city, destiny_city, trip, seats, preferences)
     db.session.add(new_request)
     db.session.commit()
-    return jsonify(requests_schema.dump(new_request))
+    return jsonify(request_schema.dump(new_request))
 
 @route_requests.route('/updaterequest', methods=['PUT'])
 def update():
@@ -39,17 +38,17 @@ def update():
     seats = request.json['seats']
     preferences = request.json['preferences']
 
-    request = Request.query.get(id)
-    if request:
-        request.traveler = traveler
-        request.stop = stop
-        request.origin_city = origin_city
-        request.destiny_city = destiny_city
-        request.trip = trip
-        request.seats = seats
-        request.preferences = preferences
+    petition = Request.query.get(id)
+    if petition:
+        petition.traveler = traveler
+        petition.stop = stop
+        petition.origin_city = origin_city
+        petition.destiny_city = destiny_city
+        petition.trip = trip
+        petition.seats = seats
+        petition.preferences = preferences
         db.session.commit()
-        return jsonify(requests_schema.dump(request))
+        return jsonify(request_schema.dump(petition))
     else:
         return "Error"
 
@@ -58,4 +57,4 @@ def delete(id):
     request = Request.query.get(id)
     db.session.delete(request)
     db.session.commit()
-    return jsonify(requests_schema.dump(request))
+    return jsonify(request_schema.dump(request))
