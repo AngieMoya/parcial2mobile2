@@ -4,8 +4,8 @@ class Trip(db.Model):
     __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key =True)
-    vehicle = db.Column(db.Integer, ForeignKey('vehicles'))
-    route = db.Column(db.Integer, ForeignKey('routes'))
+    vehicle = db.Column(db.Integer, db.ForeignKey('vehicles.id'))
+    route = db.Column(db.Integer, db.ForeignKey('routes.id'))
     start_time = db.Column(db.String(50))
     ending_time = db.Column(db.String(50))
 

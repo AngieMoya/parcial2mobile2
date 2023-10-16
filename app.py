@@ -8,6 +8,7 @@ from api.driver import Driver, route_drivers
 from api.vehicle import Vehicle, route_vehicles
 from api.driving_detail import DrivingDetail, route_driving_details
 from api.route import Route, route_routes
+from api.trip import Trip, route_trips
 
 app.register_blueprint(route_cities, url_prefix = '/api')
 app.register_blueprint(route_travelers, url_prefix = '/api')
@@ -15,6 +16,7 @@ app.register_blueprint(route_drivers, url_prefix = '/api')
 app.register_blueprint(route_vehicles, url_prefix = '/api')
 app.register_blueprint(route_driving_details, url_prefix = '/api')
 app.register_blueprint(route_routes, url_prefix = '/api')
+app.register_blueprint(route_trips, url_prefix = '/api')
 
 @app.route('/api')
 def index():
