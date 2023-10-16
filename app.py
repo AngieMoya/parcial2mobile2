@@ -11,6 +11,7 @@ from api.route import Route, route_routes
 from api.trip import Trip, route_trips
 from api.stop import Stop, route_stops
 from api.request import Request, route_requests
+from api.payment import Payment, route_payments
 
 app.register_blueprint(route_cities, url_prefix = '/api')
 app.register_blueprint(route_travelers, url_prefix = '/api')
@@ -21,6 +22,7 @@ app.register_blueprint(route_routes, url_prefix = '/api')
 app.register_blueprint(route_trips, url_prefix = '/api')
 app.register_blueprint(route_stops, url_prefix = '/api')
 app.register_blueprint(route_requests, url_prefix = '/api')
+app.register_blueprint(route_payments, url_prefix = '/api')
 
 @app.route('/api')
 def index():

@@ -16,29 +16,30 @@ def payment():
 @route_payments.route('/savepayment', methods=['POST'])
 def save():
     traveler = request.json['traveler']
-    request = request.json['request']
+    petition = request.json['request']
     state = request.json['state']
     payment_method = request.json['payment_method']
-    new_payment = City(traveler, request, state, payment_method)
+
+    new_payment = Payment(traveler, petition, state, payment_method)
     db.session.add(new_payment)
     db.session.commit()
-    return jsonify(payments_schema.dump(new_payment))
+    return jsonify(payment_schema.dump(new_payment))
 
 @route_payments.route('/updatepayment', methods=['PUT'])
 def update():
     id = request.json['id']
     traveler = request.json['traveler']
-    request = request.json['request']
+    petition = request.json['request']
     state = request.json['state']
     payment_method = request.json['payment_method']
     payment = Payment.query.get(id)
     if payment:
         payment.traveler = traveler
-        payment.request = request
+        payment.request = petition
         payment.state = state
         payment.payment_method = payment_method
         db.session.commit()
-        return jsonify(payments_schema.dump(payment))
+        return jsonify(payment_schema.dump(payment))
     else:
         return "Error"
 
@@ -47,4 +48,4 @@ def delete(id):
     payment = Payment.query.get(id)
     db.session.delete(payment)
     db.session.commit()
-    return jsonify(payments_schema.dump(payment))
+    return jsonify(payment_schema.dump(payment))
