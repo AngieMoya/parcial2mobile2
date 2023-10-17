@@ -18,8 +18,9 @@ def save():
     name = request.json['name']
     lastname = request.json['lastname']
     license = request.json['license']
+    status = request.json['status']
 
-    new_driver = Driver(name, lastname, license)
+    new_driver = Driver(name, lastname, license, status)
     db.session.add(new_driver)
     db.session.commit()
     return jsonify(driver_schema.dump(new_driver))
@@ -30,6 +31,7 @@ def Update():
     name = request.json['name']
     lastname = request.json['lastname']
     license = request.json['license']
+    status = request.json['status']
     
     driver = Driver.query.get(id)
     if driver:
@@ -37,6 +39,7 @@ def Update():
         driver.name = name
         driver.lastname = lastname
         driver.license = license
+        driver.status = status
         db.session.commit()
         return jsonify(driver_schema.dump(driver))
     else:
