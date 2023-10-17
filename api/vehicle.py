@@ -18,7 +18,9 @@ def save():
     plate = request.json['plate']
     model = request.json['model']
     seats_num = request.json['seats_num']
-    new_vehicle = Vehicle(plate, model, seats_num)
+    status = request.json['status']
+
+    new_vehicle = Vehicle(plate, model, seats_num, status)
     db.session.add(new_vehicle)
     db.session.commit()
     return jsonify(vehicle_schema.dump(new_vehicle))
@@ -31,12 +33,16 @@ def Update():
     plate = request.json['plate']
     model = request.json['model']
     seats_num = request.json['seats_num']
+    status = request.json['status']
+
     vehicle = Vehicle.query.get(id)
     if vehicle:
         print(vehicle)
         vehicle.plate = plate
         vehicle.model = model
         vehicle.seats_num = seats_num
+        vehicle.status = status
+        
         db.session.commit()
         return jsonify(vehicle_schema.dump(vehicle))
     else:

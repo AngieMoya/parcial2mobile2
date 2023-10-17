@@ -7,15 +7,17 @@ class Vehicle(db.Model):
     plate = db.Column(db.String(6))
     model = db.Column(db.Integer())
     seats_num = db.Column(db.Integer())
+    status = db.Column(db.Integer)
 
-    def __init__(self, plate, model, seats_num):
+    def __init__(self, plate, model, seats_num, status):
         self.plate = plate
         self.model = model
         self.seats_num = seats_num
+        self.status = status
 
 with app.app_context():
     db.create_all()
 
 class VehicleSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'plate', 'model', 'seats_num')
+        fields = ('id', 'plate', 'model', 'seats_num', 'status')
