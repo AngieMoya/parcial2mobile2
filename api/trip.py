@@ -1,11 +1,13 @@
 from flask import Blueprint, request, jsonify, json
 from config.db import db, app, ma
 from models.trip import Trip, TripSchema
+from models.vehicle import Vehicle, VehicleSchema
 
 route_trips = Blueprint("route_trips", __name__)
 
 trip_schema = TripSchema()
 trips_schema = TripSchema(many=True)
+vehicles_schema = VehicleSchema(many=True)
 
 @route_trips.route('/trips', methods=['GET'])
 def trip():
@@ -15,15 +17,25 @@ def trip():
 
 @route_trips.route('/savetrip', methods=['POST'])
 def save():
-    vehicle = request.json['vehicle']
-    route = request.json['route']
-    start_time = request.json['start_time']
-    ending_time = request.json['ending_time']
+    vehicles = db.session.query(Vehicle).filter(Vehicle.status == 1)
+    if len(vehicles_schema.dump(vehicles)) == 0:
+        raise Exception('No vehicle found')
+    else:
+        to_assign = vehicles_schema.dump(vehicles)[0]["id"]
+        vehicle = to_assign
+        to_update = Vehicle.query.get(to_assign)
+        to_update.status = 0
 
-    new_trip = Trip(vehicle, route, start_time, ending_time)
-    db.session.add(new_trip)
-    db.session.commit()
-    return jsonify(trip_schema.dump(new_trip))
+        route = request.json['route']
+        start_time = request.json['start_time']
+        ending_time = request.json['ending_time']
+    
+        new_trip = Trip(vehicle, route, start_time, ending_time)
+        print (f"vehicle to assing: {new_trip}")
+
+        db.session.add(new_trip)
+        db.session.commit()
+        return jsonify(trip_schema.dump(new_trip))
 
 @route_trips.route('/updatetrip', methods=['PUT'])
 def update():
