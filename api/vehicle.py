@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify, json
 from config.db import db, app, ma
 from models.vehicle import Vehicle, VehicleSchema
+from models.driver import Driver
+from models.driving_detail import DrivingDetail
 
 route_vehicles = Blueprint("route_vehicle", __name__)
 
@@ -54,3 +56,21 @@ def delete(id):
     db.session.delete(vehicle)
     db.session.commit()
     return jsonify(vehicle_schema.dump(vehicle))
+
+@route_vehicles.route('report-vehicles', methods=['GET'])
+def report():
+    datos = {}
+    resultado = db.session.query( Vehicle, DrivingDetail, Driver ). \
+        select_from(Vehicle).join(DrivingDetail).join(Driver).all()
+    
+    i=0
+    for vehicle, detail, driver in resultado:
+        i+=1
+        datos[i]={
+            'seats':vehicle.seats_num,
+            'model': vehicle.model,
+            'plate': vehicle.plate,
+            'date_of_use': detail.date_of_use,
+            'driver': f'{driver.name} {driver.lastname}'
+        }
+    return datos
