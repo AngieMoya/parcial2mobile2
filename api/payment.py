@@ -19,8 +19,10 @@ def save():
     petition = request.json['request']
     state = request.json['state']
     payment_method = request.json['payment_method']
+    limit_date = request.json['limit_date']
+    payment_date = request.json['payment_date']
 
-    new_payment = Payment(traveler, petition, state, payment_method)
+    new_payment = Payment(traveler, petition, state, payment_method, limit_date, payment_date)
     db.session.add(new_payment)
     db.session.commit()
     return jsonify(payment_schema.dump(new_payment))
@@ -32,12 +34,18 @@ def update():
     petition = request.json['request']
     state = request.json['state']
     payment_method = request.json['payment_method']
+    limit_date = request.json['limit_date']
+    payment_date = request.json['payment_date']
+
     payment = Payment.query.get(id)
     if payment:
         payment.traveler = traveler
         payment.request = petition
         payment.state = state
         payment.payment_method = payment_method
+        payment.limit_date = limit_date
+        payment.payment_date = payment_date
+        
         db.session.commit()
         return jsonify(payment_schema.dump(payment))
     else:
